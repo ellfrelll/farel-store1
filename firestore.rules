@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Produk & kategori: semua orang boleh baca (realtime storefront),
+    // tapi hanya yang sudah authenticated (termasuk Anonymous Auth dari
+    // ensureAnonAuth()) yang boleh menulis. Ini cukup untuk mencegah bot
+    // asal menulis dari luar, TAPI belum membedakan "admin" vs "user biasa"
+    // karena aplikasi ini pakai login kustom (localStorage), bukan Firebase
+    // Auth. Kalau mau admin-only write yang lebih ketat, perlu migrasi
+    // login admin ke Firebase Auth + custom claims.
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Ulasan: semua orang boleh baca. Menulis harus authenticated, dan
+    // hanya boleh membuat (create) — tidak boleh mengubah/menghapus ulasan
+    // orang lain lewat client.
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasAll(['productId', 'name', 'rating', 'text'])
+        && request.resource.data.rating is number
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5;
+      allow update, delete: if false;
+    }
+  }
+}

@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* CRITICAL FIX: Tailwind v4 defaults dark: to prefers-color-scheme (OS setting),
+   completely ignoring the .dark class toggled by ThemeContext. That mismatch is
+   why text/backgrounds broke depending on the device's OS theme regardless of
+   the in-app toggle. This forces dark: to only activate via the .dark class. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-cream: #f6f1e8;
+  --color-cream-2: #efe7d7;
+  --color-ink: #1b1714;
+  --color-brown: #3a2a1f;
+  --color-brown-2: #5a4232;
+  --color-gold: #b8924f;
+  --color-gold-soft: #d6b67d;
+  --color-muted: #8a7d70;
+  --color-line: rgba(27, 23, 20, 0.12);
+  /* Fixed (non-flipping) dark tone, used when text needs guaranteed dark
+     contrast on top of gold, regardless of light/dark theme */
+  --color-solid-dark: #241a12;
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark mode */
+.dark body {
+  background-color: #15120e;
+  color: #f6f1e8;
+}
+.dark {
+  --color-cream: #15120e;
+  --color-cream-2: #211b14;
+  --color-ink: #f6f1e8;
+  --color-brown: #d6b67d;
+  --color-brown-2: #b8924f;
+  --color-muted: #a89986;
+  --color-line: rgba(246, 241, 232, 0.12);
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.72rem;
+  color: var(--color-brown-2);
+  font-weight: 500;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.5s ease both; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in { animation: fadeIn 0.4s ease both; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.slide-down { animation: slideDown 0.25s ease both; }
+
+/* Skeleton */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--color-cream-2) 25%, rgba(255,255,255,0.4) 50%, var(--color-cream-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Product card hover */
+.product-card:hover .card-actions { opacity: 1; transform: translateY(0); }
+.card-actions { opacity: 0; transform: translateY(8px); transition: all 0.25s ease; }
+
+/* Brand scroll animation */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Dark mode bg fix */
+.dark .bg-white { background-color: #211b14; }
+.dark .bg-cream { background-color: #15120e; }
+.dark .bg-cream-2 { background-color: #211b14; }
+
+/* Admin dashboard pages (Dashboard/ProductsAdmin/CategoriesAdmin/ProductForm) were
+   never built with dark: variants, so if the global theme toggle is left on
+   "dark" and the user navigates into /admin, the shared --color-ink/--color-cream
+   tokens would flip and make admin text invisible on the still-white admin
+   surfaces. Force the admin shell back to the light palette regardless of the
+   site-wide toggle so it stays readable. */
+.admin-light {
+  --color-cream: #f6f1e8;
+  --color-cream-2: #efe7d7;
+  --color-ink: #1b1714;
+  --color-brown: #3a2a1f;
+  --color-brown-2: #5a4232;
+  --color-muted: #8a7d70;
+  --color-line: rgba(27, 23, 20, 0.12);
+  color-scheme: light;
+}
+
+/* Dark mode: keep slate-* utility classes visually consistent with the warm palette */
+.dark .bg-slate-900,
+.dark .bg-slate-800,
+.dark .bg-slate-950 { background-color: #211b14; }
+.dark .border-slate-700,
+.dark .border-slate-800 { border-color: rgba(246, 241, 232, 0.12); }
+.dark .text-slate-100,
+.dark .text-slate-200 { color: #f6f1e8; }
+.dark .hover\:bg-slate-700:hover,
+.dark .hover\:bg-slate-800:hover { background-color: #2b241a; }
