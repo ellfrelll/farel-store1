@@ -44,12 +44,14 @@ export default function Home() {
             </div>
           </div>
           <div className="relative flex justify-center">
-            <div className="absolute -inset-6 bg-gold/10 rounded-[2.5rem] -rotate-3" />
-            <img
-              src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&q=80"
-              alt="Jam tangan Rolex dipegang tangan"
-              className="relative w-3/4 aspect-[3/4] object-cover rounded-3xl shadow-2xl"
-            />
+            <div className="relative w-2/3 max-w-sm">
+              <div className="absolute -inset-4 bg-gold/10 rounded-2xl -rotate-3" />
+              <img
+                src="https://i.pinimg.com/736x/97/ca/fe/97cafe793181df23bc758fbfe4b2e1b0.jpg"
+                alt="Jam tangan Rolex dipegang tangan"
+                className="relative w-full aspect-[3/4] object-cover rounded-xl shadow-2xl"
+              />
+            </div>
           </div>
         </div>
       </section>
