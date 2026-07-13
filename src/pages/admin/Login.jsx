@@ -41,7 +41,7 @@ export default function AdminLogin() {
               <EnvelopeIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
               <input type="email" value={email} onChange={e => setEmail(e.target.value)}
                 className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-line dark:border-slate-700 bg-cream dark:bg-slate-900 text-ink dark:text-white focus:outline-none focus:border-gold"
-                placeholder="admin@dijamin.com" />
+                placeholder="farel@gmail.com" />
             </div>
           </div>
           <div>
@@ -56,9 +56,6 @@ export default function AdminLogin() {
           {error && <div className="text-sm text-red-600 bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2">{error}</div>}
           <button type="submit" className="w-full bg-ink text-cream py-3 rounded-full font-medium hover:bg-gold transition">Masuk</button>
         </form>
-        <div className="mt-4 text-xs text-muted text-center">
-          Default: <code className="bg-cream-2 dark:bg-slate-700 px-1.5 py-0.5 rounded">admin@dijamin.com</code> / <code className="bg-cream-2 dark:bg-slate-700 px-1.5 py-0.5 rounded">admin123</code>
-        </div>
       </div>
     </div>
   );

@@ -66,11 +66,6 @@ export default function Login() {
               {loading ? "Memproses..." : "Masuk"}
             </button>
           </form>
-          <div className="mt-4 text-center text-xs text-muted">
-            <span className="bg-cream-2 dark:bg-slate-700 px-3 py-1 rounded-full">
-              Demo admin: admin@dijamin.com / admin123
-            </span>
-          </div>
         </div>
       </div>
     </div>

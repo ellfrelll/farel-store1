@@ -11,8 +11,8 @@ const USERS_KEY = "dj_users";
 const AuthContext = createContext(null);
 
 const getUsers = () => loadJSON(USERS_KEY, [
-  { uid: "admin-1", email: "admin@dijamin.com", password: "admin123", username: "admin",
-    name: "Admin", role: "admin", balance: 0, photoURL: null, createdAt: Date.now() }
+  { uid: "admin-1", email: "farel@gmail.com", password: "farel12345", username: "farel",
+    name: "Farel", role: "admin", balance: 0, photoURL: null, createdAt: Date.now() }
 ]);
 const saveUsers = (u) => saveJSON(USERS_KEY, u);
 
