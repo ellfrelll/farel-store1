@@ -7,12 +7,6 @@ import ProductCard from "../components/ProductCard.jsx";
 
 const BRANDS = ["Rolex Submariner", "Rolex Daytona", "Rolex Datejust", "Rolex GMT-Master II", "Rolex Oyster Perpetual", "Rolex Sky-Dweller", "Rolex Day-Date", "Rolex Explorer"];
 
-const TESTIMONIALS = [
-  { name: "Budi S.", rating: 5, text: "Kualitasnya luar biasa, packaging juga sangat rapi. Recommended banget!", avatar: "B" },
-  { name: "Rina M.", rating: 5, text: "Rolex Datejust-nya persis seperti foto, bahkan lebih bagus. Cepat sampai!", avatar: "R" },
-  { name: "Dani P.", rating: 5, text: "Rolex Submariner-nya keren banget, finishing halus dan harga reasonable.", avatar: "D" },
-];
-
 export default function Home() {
   const { products, categories } = useData();
 
@@ -174,45 +168,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Testimoni ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <SectionTitle eyebrow="Ulasan" title="Kata Pelanggan" align="center" />
-        <div className="grid sm:grid-cols-3 gap-6 mt-10">
-          {TESTIMONIALS.map(t => (
-            <div key={t.name} className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-line dark:border-slate-700">
-              <div className="flex gap-0.5 mb-3">
-                {[...Array(t.rating)].map((_, i) => <StarSolid key={i} className="w-4 h-4 text-gold" />)}
-              </div>
-              <p className="text-sm text-muted leading-relaxed italic">"{t.text}"</p>
-              <div className="flex items-center gap-3 mt-4">
-                <div className="w-9 h-9 rounded-full bg-gold/10 flex items-center justify-center text-gold font-bold text-sm">
-                  {t.avatar}
-                </div>
-                <div className="text-sm font-semibold text-ink dark:text-white">{t.name}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      {/* ── Newsletter ── */}
-      <section className="bg-ink dark:bg-slate-900 py-16">
-        <div className="max-w-xl mx-auto px-4 text-center">
-          <div className="eyebrow text-gold mb-3">Newsletter</div>
-          <h2 className="font-display text-3xl text-white mb-4">Dapatkan Penawaran Eksklusif</h2>
-          <p className="text-white/60 text-sm mb-6">Daftar sekarang dan dapatkan diskon 10% untuk pembelian pertama.</p>
-          <div className="flex gap-2 max-w-sm mx-auto">
-            <input
-              type="email"
-              placeholder="Email kamu..."
-              className="flex-1 px-4 py-3 rounded-full text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-gold"
-            />
-            <button className="bg-gold text-white px-5 py-3 rounded-full font-medium hover:bg-gold-soft transition text-sm whitespace-nowrap">
-              Daftar
-            </button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
