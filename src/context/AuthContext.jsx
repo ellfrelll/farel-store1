@@ -10,13 +10,27 @@ const KEY = "dj_auth_user";
 const USERS_KEY = "dj_users";
 const AuthContext = createContext(null);
 
-const getUsers = () => loadJSON(USERS_KEY, [
-  { uid: "admin-1", email: "farel@gmail.com", password: "farel12345", username: "farel",
-    name: "Farel", role: "admin", balance: 0, photoURL: null, createdAt: Date.now() }
-]);
+// Initialize default admin only once
+const initUsers = () => {
+  const existing = loadJSON(USERS_KEY, null);
+  if (existing === null) {
+    const defaultUsers = [
+      { uid: "admin-1", email: "farel@gmail.com", password: "farel12345", username: "farel",
+        name: "Farel", role: "admin", balance: 0, photoURL: null, createdAt: Date.now() }
+    ];
+    saveJSON(USERS_KEY, defaultUsers);
+    return defaultUsers;
+  }
+  return existing;
+};
+
+const getUsers = () => loadJSON(USERS_KEY, []);
 const saveUsers = (u) => saveJSON(USERS_KEY, u);
 
 export function AuthProvider({ children }) {
+  // Initialize users on mount
+  useState(() => { initUsers(); });
+  
   const [user, setUser] = useState(() => loadJSON(KEY, null));
   useEffect(() => saveJSON(KEY, user), [user]);
 
