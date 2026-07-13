@@ -8,16 +8,10 @@ import ProductCard from "../components/ProductCard.jsx";
 const BRANDS = ["Rolex Submariner", "Rolex Daytona", "Rolex Datejust", "Rolex GMT-Master II", "Rolex Oyster Perpetual", "Rolex Sky-Dweller", "Rolex Day-Date", "Rolex Explorer"];
 
 export default function Home() {
-  const { products, categories } = useData();
+  const { products } = useData();
 
   const bestSellers = products.filter(p => p.is_best_seller).slice(0, 4);
   const newArrivals = products.filter(p => p.is_new_arrival).slice(0, 4);
-
-  const catImgs = {
-    analog: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=600&q=80",
-    digital: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&q=80",
-    smartwatch: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&q=80",
-  };
 
   return (
     <div className="pt-16">
@@ -84,33 +78,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Kategori ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <SectionTitle eyebrow="Jelajahi" title="Kategori" align="center" />
-        <div className="grid sm:grid-cols-3 gap-5 mt-8">
-          {categories.map(c => (
-            <Link
-              key={c.id}
-              to={`/products?kategori=${c.id}`}
-              className="relative group overflow-hidden rounded-3xl aspect-[4/3]"
-            >
-              <img
-                src={catImgs[c.id] || "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&q=80"}
-                alt={c.nama}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <div className="eyebrow text-gold mb-1">Koleksi</div>
-                <h3 className="font-display text-2xl">{c.nama}</h3>
-                <span className="mt-2 inline-flex items-center text-xs text-white/70 group-hover:text-white transition gap-1">
-                  Lihat Semua <ArrowRightIcon className="w-3 h-3" />
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {/* ── Promo Banner ── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
