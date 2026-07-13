@@ -43,12 +43,12 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative flex justify-center">
             <div className="absolute -inset-6 bg-gold/10 rounded-[2.5rem] -rotate-3" />
             <img
-              src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=900&q=80"
-              alt="Koleksi jam tangan Rolex premium di-jam-in"
-              className="relative w-full aspect-[4/5] object-cover rounded-3xl shadow-2xl"
+              src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&q=80"
+              alt="Jam tangan Rolex dipegang tangan"
+              className="relative w-3/4 aspect-[3/4] object-cover rounded-3xl shadow-2xl"
             />
           </div>
         </div>
