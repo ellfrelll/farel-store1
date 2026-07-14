@@ -50,8 +50,8 @@ export default function Footer() {
           <h4 className="text-white text-sm font-semibold mb-4">Kontak</h4>
           <ul className="space-y-2.5 text-sm text-white/70">
             <li>📱 <a href="https://wa.me/62882007294047" className="hover:text-gold">+62 882-0072-94047</a></li>
-            <li>✉️ <a href="mailto:cs@dijamin.com" className="hover:text-gold">cs@dijamin.com</a></li>
-            <li>📍 Jakarta, Indonesia</li>
+            <li>✉️ <a href="mailto:farel@gmail.com" className="hover:text-gold">farel@gmail.com</a></li>
+            <li>📍 Jawa Tengah, Indonesia</li>
             <li>🕐 Senin – Sabtu, 09.00 – 18.00</li>
           </ul>
         </div>

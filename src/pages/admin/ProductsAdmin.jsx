@@ -83,6 +83,7 @@ export default function ProductsAdmin() {
                   <th className="px-4 py-3 font-medium">Nama</th>
                   <th className="px-4 py-3 font-medium">Kategori</th>
                   <th className="px-4 py-3 font-medium">Harga</th>
+                  <th className="px-4 py-3 font-medium">Stok</th>
                   <th className="px-4 py-3 font-medium">Best</th>
                   <th className="px-4 py-3 font-medium">New</th>
                   <th className="px-4 py-3 font-medium text-right">Aksi</th>
@@ -97,6 +98,7 @@ export default function ProductsAdmin() {
                       <td className="px-4 py-3 font-medium">{p.nama}</td>
                       <td className="px-4 py-3 text-muted">{cat?.nama || "-"}</td>
                       <td className="px-4 py-3">{formatRupiah(p.harga)}</td>
+                      <td className="px-4 py-3">{p.stok ?? 0}</td>
                       <td className="px-4 py-3">{p.is_best_seller ? <span className="text-gold">●</span> : <span className="text-line">○</span>}</td>
                       <td className="px-4 py-3">{p.is_new_arrival ? <span className="text-gold">●</span> : <span className="text-line">○</span>}</td>
                       <td className="px-4 py-3 text-right">

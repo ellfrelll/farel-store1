@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-const empty = { nama: "", harga: "", deskripsi: "", gambar: "", kategori: "", is_best_seller: false, is_new_arrival: false };
+const empty = { nama: "", harga: "", deskripsi: "", gambar: "", kategori: "", stok: 1, is_best_seller: false, is_new_arrival: false };
 
 export default function ProductForm({ open, onClose, onSubmit, initial, categories }) {
   const [form, setForm] = useState(empty);
@@ -9,7 +9,12 @@ export default function ProductForm({ open, onClose, onSubmit, initial, categori
 
   useEffect(() => {
     if (open) {
-      setForm(initial ? { ...empty, ...initial, harga: String(initial.harga ?? "") } : empty);
+      setForm(initial ? { 
+        ...empty, 
+        ...initial, 
+        harga: String(initial.harga ?? ""),
+        stok: initial.stok ?? 1 
+      } : empty);
       setErrors({});
     }
   }, [open, initial]);
@@ -40,7 +45,7 @@ export default function ProductForm({ open, onClose, onSubmit, initial, categori
   const submit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    onSubmit({ ...form, harga: Number(form.harga) });
+    onSubmit({ ...form, harga: Number(form.harga), stok: Number(form.stok) || 1 });
   };
 
   return (
@@ -66,13 +71,18 @@ export default function ProductForm({ open, onClose, onSubmit, initial, categori
               {errors.harga && <p className="text-xs text-red-600 mt-1">{errors.harga}</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1.5">Kategori</label>
-              <select value={form.kategori} onChange={(e) => change("kategori", e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-line focus:outline-none focus:border-ink bg-white">
-                <option value="">Pilih kategori</option>
-                {categories.map((c) => <option key={c.id} value={c.id}>{c.nama}</option>)}
-              </select>
-              {errors.kategori && <p className="text-xs text-red-600 mt-1">{errors.kategori}</p>}
+              <label className="block text-sm font-medium mb-1.5">Stok</label>
+              <input type="number" min="0" value={form.stok} onChange={(e) => change("stok", e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-line focus:outline-none focus:border-ink" />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1.5">Kategori</label>
+            <select value={form.kategori} onChange={(e) => change("kategori", e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-line focus:outline-none focus:border-ink bg-white">
+              <option value="">Pilih kategori</option>
+              {categories.map((c) => <option key={c.id} value={c.id}>{c.nama}</option>)}
+            </select>
+            {errors.kategori && <p className="text-xs text-red-600 mt-1">{errors.kategori}</p>}
           </div>
 
           <div>
