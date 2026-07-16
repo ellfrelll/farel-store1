@@ -119,6 +119,14 @@ export default function ProductDetail() {
     : (product.rating || 0);
 
   const handleAdd = () => {
+    if ((product.stok ?? 0) === 0) {
+      toast.error("Produk ini sedang habis stok");
+      return;
+    }
+    if (qty > (product.stok ?? 0)) {
+      toast.error(`Stok hanya tersedia ${product.stok} unit`);
+      return;
+    }
     add(product.id, qty);
     toast.success(`${product.nama} (×${qty}) ditambahkan ke keranjang`);
   };
@@ -175,8 +183,8 @@ export default function ProductDetail() {
           </div>
 
           {/* Stock */}
-          <div className={`mt-2 text-sm ${(product.stock || 0) <= 10 ? "text-orange-500" : "text-green-600 dark:text-green-400"}`}>
-            {(product.stock || 0) > 0 ? `Stok: ${product.stock} tersedia` : "Stok habis"}
+          <div className={`mt-2 text-sm font-medium ${(product.stok ?? 0) <= 10 && (product.stok ?? 0) > 0 ? "text-orange-500" : (product.stok ?? 0) > 0 ? "text-green-600 dark:text-green-400" : "text-red-500"}`}>
+            {(product.stok ?? 0) > 0 ? `Stok: ${product.stok} tersedia` : "⚠️ Stok habis"}
           </div>
 
           <p className="mt-5 text-muted dark:text-slate-400 leading-relaxed">{product.deskripsi}</p>
@@ -188,7 +196,7 @@ export default function ProductDetail() {
                 <MinusIcon className="w-4 h-4" />
               </button>
               <span className="px-4 text-sm font-semibold text-ink dark:text-white w-10 text-center">{qty}</span>
-              <button onClick={() => setQty(q => Math.min(product.stock || 99, q + 1))} className="p-2.5 hover:bg-cream-2 dark:hover:bg-slate-700 rounded-r-full transition">
+              <button onClick={() => setQty(q => Math.min(product.stok || 99, q + 1))} className="p-2.5 hover:bg-cream-2 dark:hover:bg-slate-700 rounded-r-full transition">
                 <PlusIcon className="w-4 h-4" />
               </button>
             </div>
@@ -199,10 +207,11 @@ export default function ProductDetail() {
           <div className="mt-6 flex flex-wrap gap-3">
             <button
               onClick={handleAdd}
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-ink dark:bg-gold text-cream dark:text-solid-dark px-6 py-3 rounded-full font-medium hover:bg-gold dark:hover:bg-gold-soft transition"
+              disabled={(product.stok ?? 0) === 0}
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-ink dark:bg-gold text-cream dark:text-solid-dark px-6 py-3 rounded-full font-medium hover:bg-gold dark:hover:bg-gold-soft transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ShoppingBagIcon className="w-5 h-5" />
-              Tambah ke Keranjang
+              {(product.stok ?? 0) === 0 ? "Stok Habis" : "Tambah ke Keranjang"}
             </button>
             <button
               onClick={() => { toggle(product.id); toast.success(wished ? "Dihapus dari wishlist" : "Ditambahkan ke wishlist"); }}

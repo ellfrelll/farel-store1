@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext.jsx";
 import { useData } from "../context/DataContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useOrders } from "../context/OrderContext.jsx";
+import { useWishlist } from "../context/WishlistContext.jsx";
 import { useToast } from "../components/Toast.jsx";
 import { formatRupiah } from "../utils/format.js";
 import { openWhatsAppCheckout } from "../utils/whatsapp.js";
@@ -12,9 +13,10 @@ import { loadJSON, saveJSON } from "../utils/storage.js";
 
 export default function Cart() {
   const { items, inc, dec, remove, clear } = useCart();
-  const { products } = useData();
+  const { products, updateProduct } = useData();
   const { user, isAuthenticated, deductBalance } = useAuth();
   const { addOrder } = useOrders();
+  const { remove: removeFromWishlist } = useWishlist();
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -30,6 +32,18 @@ export default function Cart() {
     const grandTotal = total + shipping;
     const result = deductBalance(grandTotal);
     if (!result.ok) { toast.error(result.error); navigate("/balance"); return; }
+    
+    // Kurangi stok produk dan hapus dari wishlist
+    detailed.forEach(item => {
+      const currentProduct = products.find(p => p.id === item.product.id);
+      if (currentProduct) {
+        const newStok = (currentProduct.stok || 0) - item.qty;
+        updateProduct(item.product.id, { stok: Math.max(0, newStok) });
+      }
+      // Hapus dari wishlist kalau ada
+      removeFromWishlist(item.product.id);
+    });
+    
     const order = addOrder({ uid: user.uid, items: detailed.map(i => ({ id: i.product.id, nama: i.product.nama, qty: i.qty, harga: i.product.harga })), total: grandTotal });
     const txKey = `dj_tx_${user.uid}`;
     const txs = loadJSON(txKey, []);

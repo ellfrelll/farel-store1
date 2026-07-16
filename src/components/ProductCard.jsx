@@ -19,6 +19,10 @@ export default function ProductCard({ product }) {
   const handleAdd = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if ((product.stok ?? 0) === 0) {
+      toast.error("Produk ini sedang habis stok");
+      return;
+    }
     add(product.id, 1);
     toast.success(`${product.nama} ditambahkan ke keranjang`);
   };
@@ -74,10 +78,11 @@ export default function ProductCard({ product }) {
         <div className="card-actions absolute bottom-2 left-2 right-2">
           <button
             onClick={handleAdd}
-            className="w-full flex items-center justify-center gap-1.5 text-xs font-medium bg-ink text-cream py-2 rounded-xl hover:bg-gold transition-colors"
+            disabled={(product.stok ?? 0) === 0}
+            className="w-full flex items-center justify-center gap-1.5 text-xs font-medium bg-ink text-cream py-2 rounded-xl hover:bg-gold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShoppingBagIcon className="w-4 h-4" />
-            Tambah ke Keranjang
+            {(product.stok ?? 0) === 0 ? "Stok Habis" : "Tambah ke Keranjang"}
           </button>
         </div>
       </div>
@@ -95,8 +100,11 @@ export default function ProductCard({ product }) {
             <span className="text-xs text-muted line-through">{formatRupiah(product.harga_asli)}</span>
           )}
         </div>
-        {product.stock <= 10 && (
-          <div className="text-[10px] text-orange-500 mt-1">Stok tersisa {product.stock}</div>
+        {(product.stok ?? 0) <= 10 && (product.stok ?? 0) > 0 && (
+          <div className="text-[10px] text-orange-500 mt-1">Stok tersisa {product.stok}</div>
+        )}
+        {(product.stok ?? 0) === 0 && (
+          <div className="text-[10px] text-red-500 mt-1 font-semibold">Stok habis</div>
         )}
       </div>
     </Link>
